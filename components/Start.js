@@ -69,8 +69,8 @@ const Start = ({ navigation }) => {
                    
                     <TouchableOpacity style={styles.fauxButton}>
                         <Button
-                            title='Go to chat screen'
-                            onPress={() => navigation.navigate('Screen2', { name: name})}
+                            title='Go to chat'
+                            onPress={() => navigation.navigate('Chat', { name })}
                         />  
                     </TouchableOpacity>
             
