@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 
-const Screen1 = ({ navigation }) => {
+const Start = ({ navigation }) => {
     const [name, setName] = useState('');
     const [color, setColor] = useState('');
 
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     },
 });
    
-export default Screen1;
+export default Start;
 
 
                 
