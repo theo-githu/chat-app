@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
  },
  textingBox: {
   flex: 1,
+  height: '15%',
   },
 });
 
