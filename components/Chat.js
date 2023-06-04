@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { StyleSheet, View, Platform, KeyboardAvoidingView } from 'react-native';
 import { Bubble, GiftedChat } from 'react-native-gifted-chat';
 import { collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const Chat = ({ db, route, navigation }) => {
@@ -12,7 +13,7 @@ const Chat = ({ db, route, navigation }) => {
       navigation.setOptions({ title: name });
 
         const q = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));
-        unsubMessages = onSnapshot(q, (documentsSnapshot) => {
+        const unsubMessages = onSnapshot(q, (documentsSnapshot) => {
           let newMessages = [];
           documentsSnapshot.forEach((doc) => {
             newMessages.push({
@@ -21,6 +22,7 @@ const Chat = ({ db, route, navigation }) => {
               createdAt: new Date(doc.data().createdAt.toMillis()),
             });
           });
+          cacheMessages(newMessages)
           setMessages(newMessages);
         });
     
@@ -28,6 +30,14 @@ const Chat = ({ db, route, navigation }) => {
         if (unsubMessages) unsubMessages();
       };
     }, []);
+
+    const cacheMessages = async (messagesToCache) => {
+      try {
+        await AsyncStorage.setItem('messages', JSON.stringify(messagesToCache));
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
 
     const onSend = (newMessages) => {
       addDoc(collection(db, 'messages'), newMessages[0])
