@@ -3,7 +3,6 @@ import {
     StyleSheet, 
     View, 
     Text, 
-    Button, 
     TextInput, 
     ImageBackground, 
     KeyboardAvoidingView,
@@ -13,7 +12,7 @@ import { getAuth, signInAnonymously } from "firebase/auth";
 
 
 const Start = ({ navigation }) => {
-    const [test, setText] = useState('');
+    const [text, setText] = useState('');
     const [color, setColor] = useState('');
     const auth = getAuth();
 
@@ -118,7 +117,6 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 45,
         fontWeight: '600',
-        flex: 2,
         marginTop: 20,
     },
     inputBox: {
@@ -141,7 +139,6 @@ const styles = StyleSheet.create({
     },
     colorSelect: {
         height:75,
-        flex: 3,
     },
     colorText: {
         textAlign: 'center',
@@ -149,7 +146,6 @@ const styles = StyleSheet.create({
         fontWeight: '300',
         color: '#757083',
         opacity: 100,
-        flex: 8,
         marginTop: 20
     },
     colorWrapperContainer: {
@@ -166,8 +162,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '88%',
         padding: 10,
-        flex: 6,
-        marginTop:20,
+        marginTop: 20,
     },
 });
    

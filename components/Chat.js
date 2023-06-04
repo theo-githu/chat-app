@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet, View, Platform, KeyboardAvoidingView } from 'react-native';
 import { Bubble, GiftedChat } from 'react-native-gifted-chat';
-import { collection, addDoc, onSnapshot } from "firebase/firestore";
+import { collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
 
 
 const Chat = ({ db, route, navigation }) => {
@@ -12,9 +12,9 @@ const Chat = ({ db, route, navigation }) => {
       navigation.setOptions({ title: name });
 
         const q = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));
-        unsubMessages = onSnapshot(q, (docs) => {
+        unsubMessages = onSnapshot(q, (documentsSnapshot) => {
           let newMessages = [];
-          docs.forEach((doc) => {
+          documentsSnapshot.forEach((doc) => {
             newMessages.push({
               id: doc.id,
               ...doc.data(),
@@ -23,8 +23,7 @@ const Chat = ({ db, route, navigation }) => {
           });
           setMessages(newMessages);
         });
-      
-
+    
       return () => {
         if (unsubMessages) unsubMessages();
       };
@@ -49,8 +48,9 @@ const Chat = ({ db, route, navigation }) => {
     }
 
     return (
-        <View style={[styles.container, { backgroundColor: color }]}>
+        <View style={styles.container}>
             <GiftedChat
+                style={styles.textingBox}
                 messages={messages}
                 renderBubble={renderBubble}
                 onSend={messages => onSend(messages)}
@@ -68,7 +68,10 @@ const Chat = ({ db, route, navigation }) => {
 const styles = StyleSheet.create({
  container: {
    flex: 1,
- }
+ },
+ textingBox: {
+  flex: 1,
+  },
 });
 
 export default Chat;
