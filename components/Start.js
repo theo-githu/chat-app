@@ -10,20 +10,19 @@ import {
 } from 'react-native';
 import { getAuth, signInAnonymously } from "firebase/auth";
 
-
 const Start = ({ navigation }) => {
     const [text, setText] = useState('');
     const [color, setColor] = useState('');
     const auth = getAuth();
 
-    const bgColors = {
-        black: { backgroundColor: '#090C08'},
-        purple: { backgroundColor: '#474056'},
-        blue: { backgroundColor: '#8A95A5'},
-        mint: { backgroundColor: '#B9C6AE'}
+    const backgroundColors = {
+        pink: { backgroundColor: '#FD77FF'},
+        purple: { backgroundColor: '#9871EB'},
+        blue: { backgroundColor: '#65CEFF'},
+        mint: { backgroundColor: '#36FFAD'}
     };
-
-    const { black, blue, purple, mint } = bgColors;
+    
+    const { pink, purple, blue, mint} = backgroundColors;
 
     // Function to sign in the user anonymously
     const signInUser = () => {
@@ -63,23 +62,23 @@ const Start = ({ navigation }) => {
                     <Text style={styles.colorText}>Choose your background colour</Text>
                         <View style={styles.colorWrapperContainer}>
                             <TouchableOpacity
-                            style={[styles.color, black]}
-                            onPress={() => setColor('#090C08')}
+                            style={[styles.color, pink]}
+                            onPress={() => setColor('#FD77FF')}
                             />
 
                             <TouchableOpacity
                             style={[styles.color, purple]}
-                            onPress={() => setColor('#474056')}
+                            onPress={() => setColor('#9871EB')}
                             />
 
                             <TouchableOpacity
                             style={[styles.color, blue]}
-                            onPress={() => setColor('#8A95A5')}
+                            onPress={() => setColor('#65CEFF')}
                             />
 
                             <TouchableOpacity
                             style={[styles.color, mint]}
-                            onPress={() => setColor('#B9C6AE')}
+                            onPress={() => setColor('#36FFAD')}
                             />
                         </View>
                     </View>
