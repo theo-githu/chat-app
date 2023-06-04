@@ -6,13 +6,16 @@ import {
     Button, 
     TextInput, 
     ImageBackground, 
+    KeyboardAvoidingView,
     TouchableOpacity  
 } from 'react-native';
+import { getAuth, signInAnonymously } from "firebase/auth";
 
 
 const Start = ({ navigation }) => {
-    const [name, setName] = useState('');
+    const [test, setText] = useState('');
     const [color, setColor] = useState('');
+    const auth = getAuth();
 
     const bgColors = {
         black: { backgroundColor: '#090C08'},
@@ -22,6 +25,22 @@ const Start = ({ navigation }) => {
     };
 
     const { black, blue, purple, mint } = bgColors;
+
+    // Function to sign in the user anonymously
+    const signInUser = () => {
+        signInAnonymously(auth)
+          .then(result => {
+            navigation.navigate('Chat', {
+                userID: result.user.uid,
+                name: text ? text : 'User',
+                color: color ? color : 'white', 
+            });
+            Alert.alert('Signed in Successfully!');
+          })
+          .catch((error) => {
+            Alert.alert('Unable to sign in, try later again.');
+          })
+    }
 
     return (
         <ImageBackground
@@ -37,9 +56,8 @@ const Start = ({ navigation }) => {
                 <View style={styles.inputBox}>
                     <TextInput
                         style={styles.textInput}
-                        value={name}
-                        onChangeText={setName}
-                        placeholder='Type your username here'
+                        onChangeText={setText}
+                        placeholder='Enter username'
                     />    
 
                     <View style={styles.colorSelect}>
@@ -67,16 +85,16 @@ const Start = ({ navigation }) => {
                         </View>
                     </View>
                    
-                    <TouchableOpacity style={styles.fauxButton}>
-                        <Button
-                            title='Go to chat'
-                            onPress={() => navigation.navigate('Chat', { name })}
-                        />  
+                    <TouchableOpacity style={styles.button} onPress={signInUser}>
+                        <Text>  
+                            Start Chatting
+                        </Text>
                     </TouchableOpacity>
-            
-                   
                 </View>
             </View>
+            {Platform.OS === "ios" ? (
+                <KeyboardAvoidingView behavior='padding' />
+            ) : null}
         </ImageBackground>
     );
 }
@@ -143,7 +161,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         margin: 10
     },
-    fauxbutton: {
+    button: {
         backgroundColor: '#757083',
         alignItems: 'center',
         width: '88%',
