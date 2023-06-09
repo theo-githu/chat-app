@@ -1,8 +1,7 @@
 
-import { View, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
-import { TouchableOpacity, Text, View } from "react-native";
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
