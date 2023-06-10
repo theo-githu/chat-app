@@ -15,6 +15,23 @@ LogBox.ignoreLogs(["AsyncStorage has been extracted from"]);
 // Create the navigator
 const Stack = createNativeStackNavigator();
 
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDS5LQ97UTZhb_iQWLJF2HV_L9xm0EH1kU",
+  authDomain: "chat-app-6b367.firebaseapp.com",
+  projectId: "chat-app-6b367",
+  storageBucket: "chat-app-6b367.appspot.com",
+  messagingSenderId: "433608266795",
+  appId: "1:433608266795:web:5324f7b5beb160560c866e"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore(app);
+const storage = getStorage(app);
+
 const App = () => {
   const connectionStatus = useNetInfo();
 
@@ -28,22 +45,6 @@ const App = () => {
       }
   }, [connectionStatus.isConnected]);
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyDS5LQ97UTZhb_iQWLJF2HV_L9xm0EH1kU",
-    authDomain: "chat-app-6b367.firebaseapp.com",
-    projectId: "chat-app-6b367",
-    storageBucket: "chat-app-6b367.appspot.com",
-    messagingSenderId: "433608266795",
-    appId: "1:433608266795:web:5324f7b5beb160560c866e"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-
-  // Initialize Cloud Firestore and get a reference to the service
-  const db = getFirestore(app);
-  const storage = getStorage(app);
 
   return (
     <NavigationContainer>
