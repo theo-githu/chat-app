@@ -1,12 +1,11 @@
 
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
-const CustomActions = (wrapperStyle, iconTextStyle, onSend, storage, userID) => {
-
+const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage, userID }) => {
     const actionSheet = useActionSheet();
 
     const onActionPress = () =>{
@@ -31,28 +30,6 @@ const CustomActions = (wrapperStyle, iconTextStyle, onSend, storage, userID) => 
                 }
             },
         );
-    };
-
-    const generateReference = (uri) => {
-        const timeStamp = (new Date()).getTime();
-        const imageName = uri.split("/")[uri.split("/").length - 1];
-        return `${userID}-${timeStamp}-${imageName}`;
-    }
-
-    const getLocation = async () => {
-        let permissions = await Location.requestForegroundPermissionsAsync();
-
-        if (permissions?.granted) {
-            const location = await Location.getCurrentPositionAsync({});
-            if (location) {
-                onSend({
-                  location: {
-                    longitude: location.coords.longitude,
-                    latitude: location.coords.latitude,
-                  },
-                });
-            } else Alert.alert("Error occurred while fetching location");
-        } else Alert.alert("Permissions to read location aren't granted");
     };
 
     const uploadAndSendImage = async (imageURI) => {
@@ -82,6 +59,28 @@ const CustomActions = (wrapperStyle, iconTextStyle, onSend, storage, userID) => 
           if (!result.canceled) await uploadAndSendImage(result.assets[0].uri);
           else Alert.alert("Permissions haven't been granted.");
         }
+    };
+
+    const generateReference = (uri) => {
+        const timeStamp = (new Date()).getTime();
+        const imageName = uri.split("/")[uri.split("/").length - 1];
+        return `${userID}-${timeStamp}-${imageName}`;
+    }
+
+    const getLocation = async () => {
+        let permissions = await Location.requestForegroundPermissionsAsync();
+
+        if (permissions?.granted) {
+            const location = await Location.getCurrentPositionAsync({});
+            if (location) {
+                onSend({
+                  location: {
+                    longitude: location.coords.longitude,
+                    latitude: location.coords.latitude,
+                  },
+                });
+            } else Alert.alert("Error occurred while fetching location");
+        } else Alert.alert("Permissions to read location aren't granted");
     };
 
     return (
