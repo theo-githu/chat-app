@@ -16,9 +16,9 @@ const Start = ({ navigation }) => {
     const auth = getAuth();
 
     const backgroundColors = {
-        pink: { backgroundColor: '#090C08'},
+        pink: { backgroundColor: '#F8C8DC'},
         purple: { backgroundColor: '#474056'},
-        blue: { backgroundColor: '#8A95A5;'},
+        blue: { backgroundColor: '#8A95A5'},
         mint: { backgroundColor: '#B9C6AE'}
     };
     
@@ -65,7 +65,7 @@ const Start = ({ navigation }) => {
                             <View style={styles.colorWrapperContainer}>
                                 <TouchableOpacity
                                 style={[styles.color, pink]}
-                                onPress={() => setColor('#090C08;')}
+                                onPress={() => setColor('#F8C8DC')}
                                 />
 
                                 <TouchableOpacity
